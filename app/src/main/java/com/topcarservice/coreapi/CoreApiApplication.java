@@ -1,4 +1,4 @@
-package com.top_car_service.core_api;
+package com.topcarservice.coreapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
