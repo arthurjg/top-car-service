@@ -1,0 +1,20 @@
+package com.topcarservice.coreapi.controller.mapper;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.topcarservice.coreapi.controller.dto.ServicoDTO;
+import com.topcarservice.coreapi.domain.Servico;
+
+@Component
+public class ServicoMapper {
+	
+	@Autowired
+	private ModelMapper objectMapper;
+
+	public Servico map(ServicoDTO servicoDto) {		
+		return objectMapper.map(servicoDto, Servico.class);
+	}
+
+}
