@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/peca-insumos")
+@RequestMapping("/admin/peca-insumos")
 public class PecaInsumoController {
 	
 	PecaInsumoService pecaInsumoService;	

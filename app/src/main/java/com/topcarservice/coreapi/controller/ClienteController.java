@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/admin/clientes")
 public class ClienteController {
 	
 	ClienteService clienteService;	
