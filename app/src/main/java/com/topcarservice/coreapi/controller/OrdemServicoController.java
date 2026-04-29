@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topcarservice.coreapi.controller.dto.OrdemServicoDTO;
+import com.topcarservice.coreapi.controller.dto.OrdemServicoRetornoDTO;
 import com.topcarservice.coreapi.controller.mapper.OrdemServicoMapper;
 import com.topcarservice.coreapi.domain.OrdemServico;
 import com.topcarservice.coreapi.service.OrdemServicoService;
@@ -24,7 +25,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/admin/ordemServicos")
+@RequestMapping("/admin/ordem-servicos")
 public class OrdemServicoController {
 	
 	OrdemServicoService ordemServicoService;	
@@ -49,11 +50,13 @@ public class OrdemServicoController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OrdemServico>> listar() {	
+	public ResponseEntity<List<OrdemServicoRetornoDTO>> listar() {	
 		
-		List<OrdemServico> ordemsServico = ordemServicoService.listar();		
+		List<OrdemServico> ordemsServico = ordemServicoService.listar();	
 		
-		return ResponseEntity.ok().body(ordemsServico);
+		List<OrdemServicoRetornoDTO> ordemsServicoRetorno  = ordemServicoMapper.map(ordemsServico);
+		
+		return ResponseEntity.ok().body(ordemsServicoRetorno);
 	}
 	
 	@PutMapping("/{id}")

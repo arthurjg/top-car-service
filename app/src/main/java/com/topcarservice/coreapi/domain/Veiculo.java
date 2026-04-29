@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,17 +17,23 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Entity
+@Setter
 public class Veiculo {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Setter
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long codigo;
 	
-	private String cpf;
+	private String placa;
 	
-	private String cnpj;
+	private String marca;
 	
-	private String nome;
+	private String modelo;
+	
+	private Integer ano;
+	
+	@ManyToOne
+	@JoinColumn(name = "cliente_codigo")
+	private Cliente cliente;
 
 }

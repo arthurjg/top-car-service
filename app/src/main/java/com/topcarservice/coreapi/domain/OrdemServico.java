@@ -1,18 +1,20 @@
 package com.topcarservice.coreapi.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Entity
 public class OrdemServico {
@@ -22,10 +24,22 @@ public class OrdemServico {
 	@Setter
 	private Long codigo;
 	
-	private String cpf;
+	private StatusOrdemServico status;	
 	
-	private String cnpj;
+	@ManyToOne
+	@JoinColumn(name = "cliente_codigo")	
+	private Cliente cliente;
 	
-	private String nome;
+	@ManyToMany
+	private List<Servico> servicos;
+	
+	private LocalDateTime dataAbertura;
+
+	public OrdemServico() {
+		super();
+		dataAbertura = LocalDateTime.now();
+		status = StatusOrdemServico.RECEBIDA;
+		servicos = new ArrayList<>();		
+	}	
 
 }

@@ -1,9 +1,13 @@
 package com.topcarservice.coreapi.domain;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,18 +18,28 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 public class PecaInsumo {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Setter
-	private Long codigo;
-	
-	private String cpf;
-	
-	private String cnpj;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	private Long codigo;	
 	
 	private String nome;
+	
+	private String descricao;
+	
+	private String fabricante;
+	
+	private String modelo;
+	
+	private Integer quantidade;
+	
+	private BigDecimal valorUnitario;
+	
+	@ManyToOne
+	@JoinColumn(name = "servico_codigo")	
+	private Servico servico;
 
 }

@@ -25,17 +25,22 @@ class VeiculoServiceTest {
 	
 	@Mock
 	VeiculoRepository	repository;
+	
+	Veiculo veiculo;
 
 	@BeforeEach
 	void setUp() throws Exception {
+		
+		veiculo = Veiculo.builder()
+				.placa("QHU-5R66")
+				.marca("Porche")
+				.modelo("Cayenne")
+				.ano(2022)
+				.build();	
 	}
 	
 	@Test
-	void testSalvar() {				
-		
-		Veiculo veiculo = Veiculo.builder()
-				.nome("John Doe")				
-				.build();		
+	void testSalvar() {					
 		
 		service.salvar(veiculo);
 		
@@ -45,25 +50,21 @@ class VeiculoServiceTest {
 	@Test
 	void testCarregar() {
 		
-		long codigo = 1L;
+		long codigo = 1L;		
 		
-		Veiculo veiculoMock = Veiculo.builder()
-				.nome("John Doe")				
-				.build();
-		
-		when(repository.findById(codigo)).thenReturn(Optional.of(veiculoMock));
+		when(repository.findById(codigo)).thenReturn(Optional.of(veiculo));
 		
 		Veiculo veiculoResult = service.carregar(codigo);
 		
 		assertNotNull(veiculoResult);
-		assertEquals(veiculoMock.getNome(), veiculoResult.getNome());
+		assertEquals(veiculo.getPlaca(), veiculoResult.getPlaca());
+		assertEquals(veiculo.getMarca(), veiculoResult.getMarca());
+		assertEquals(veiculo.getModelo(), veiculoResult.getModelo());
+		assertEquals(veiculo.getAno(), veiculoResult.getAno());
 	}
 
 	@Test
-	void testExcluir() {
-		Veiculo veiculo = Veiculo.builder()
-				.nome("John Doe")				
-				.build();		
+	void testExcluir() {				
 		
 		service.excluir(veiculo);
 		

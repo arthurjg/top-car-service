@@ -2,9 +2,11 @@ package com.topcarservice.coreapi.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,12 +28,15 @@ class OrdemServicoServiceTest {
 	@Mock
 	OrdemServicoRepository	repository;	
 	
+	private OrdemServico ordemServico;
+	
+	@BeforeEach
+	void setUp() throws Exception {
+		ordemServico = new OrdemServico();
+	}
+	
 	@Test
-	void testSalvar() {				
-		
-		OrdemServico ordemServico = OrdemServico.builder()
-				.nome("John Doe")				
-				.build();		
+	void testSalvar() {					
 		
 		service.salvar(ordemServico);
 		
@@ -41,29 +46,37 @@ class OrdemServicoServiceTest {
 	@Test
 	void testCarregar() {
 		
-		long codigo = 1L;
+		long codigo = 1L;		
 		
-		OrdemServico ordemServicoMock = OrdemServico.builder()
-				.nome("John Doe")				
-				.build();
-		
-		when(repository.findById(codigo)).thenReturn(Optional.of(ordemServicoMock));
+		when(repository.findById(codigo)).thenReturn(Optional.of(ordemServico));
 		
 		OrdemServico ordemServicoResult = service.carregar(codigo);
 		
 		assertNotNull(ordemServicoResult);
-		assertEquals(ordemServicoMock.getNome(), ordemServicoResult.getNome());
+		assertEquals(ordemServico.getDataAbertura(), ordemServicoResult.getDataAbertura());
+		assertEquals(ordemServico.getStatus(), ordemServicoResult.getStatus());
+		assertEquals(ordemServico.getCliente(), ordemServicoResult.getCliente());
 	}
 
 	@Test
-	void testExcluir() {
-		OrdemServico ordemServico = OrdemServico.builder()
-				.nome("John Doe")				
-				.build();		
+	void testExcluir() {			
 		
 		service.excluir(ordemServico);
 		
 		verify(repository).delete(ordemServico);
+	}
+	
+	@Test
+	void testLitagem() {		
+		
+		when(repository.findAll()).thenReturn(List.of(ordemServico));
+		
+		List<OrdemServico> ordemsServicosResult = service.listar();
+		
+		assertNotNull(ordemsServicosResult);
+		assertFalse(ordemsServicosResult.isEmpty());
+		
+		
 	}
 
 }
