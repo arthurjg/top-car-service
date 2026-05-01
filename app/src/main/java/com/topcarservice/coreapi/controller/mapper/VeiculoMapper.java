@@ -14,7 +14,22 @@ public class VeiculoMapper {
 	private ModelMapper objectMapper;
 
 	public Veiculo map(VeiculoDTO veiculoDto) {		
-		return objectMapper.map(veiculoDto, Veiculo.class);
+		return Veiculo.builder()
+				.placa(veiculoDto.getPlaca())
+				.marca(veiculoDto.getMarca())
+				.modelo(veiculoDto.getModelo())
+				.ano(veiculoDto.getAno())
+				.build();
+	}
+	
+	public VeiculoDTO mapTo(Veiculo veiculo) {		
+		return VeiculoDTO.builder()
+				.placa(veiculo.getPlaca())
+				.marca(veiculo.getMarca())
+				.modelo(veiculo.getModelo())
+				.ano(veiculo.getAno())
+				.codigoCliente(veiculo.getCliente().getCodigo())
+				.build();
 	}
 
 }

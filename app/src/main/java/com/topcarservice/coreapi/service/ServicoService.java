@@ -20,7 +20,7 @@ public class ServicoService {
 	public Servico carregar(Long codigo) {
 		
 		return servicoRepository.findById(codigo)
-				.orElseThrow(() -> new RuntimeException("Servico não encontrado"));
+				.orElseThrow(() -> new IllegalArgumentException("Servico não encontrado"));
 	}
 
 	public void excluir(Servico servico) {

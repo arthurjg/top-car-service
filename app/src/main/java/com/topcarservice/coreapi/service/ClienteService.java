@@ -20,7 +20,7 @@ public class ClienteService {
 	public Cliente carregar(Long codigo) {
 		
 		return clienteRepository.findById(codigo)
-				.orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+				.orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
 	}
 
 	public void excluir(Cliente cliente) {

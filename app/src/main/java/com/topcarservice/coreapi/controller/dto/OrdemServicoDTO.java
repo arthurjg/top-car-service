@@ -1,5 +1,18 @@
 package com.topcarservice.coreapi.controller.dto;
 
-public record OrdemServicoDTO (String cpf, String cnpj, String nome) {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+public class OrdemServicoDTO{
+	
+	Long codigoCliente;
 
 }

@@ -39,11 +39,17 @@ public class ServicoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Servico> buscar(@PathVariable("id") Long codigo) {	
+	public ResponseEntity<ServicoDTO> buscar(@PathVariable("id") Long codigo) {			
 		
-		Servico servico = servicoService.carregar(codigo);		
-		
-		return ResponseEntity.ok().body(servico);
+		try {
+			Servico servico = servicoService.carregar(codigo);	
+			
+			ServicoDTO servicoResponse = servicoMapper.mapTo(servico);
+			
+			return ResponseEntity.ok().body(servicoResponse);
+		} catch (IllegalArgumentException e) {			
+			return ResponseEntity.notFound().build();
+		}	
 	}
 	
 	@PutMapping("/{id}")

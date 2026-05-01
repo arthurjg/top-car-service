@@ -11,16 +11,16 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class VeiculoService {
 	
-	private final VeiculoRepository veiculoRepository;
+	private final VeiculoRepository veiculoRepository;	
 
-	public void salvar(Veiculo veiculo) {
+	public void salvar(Veiculo veiculo) {		
 		veiculoRepository.save(veiculo);		
 	}
 
 	public Veiculo carregar(Long codigo) {
 		
 		return veiculoRepository.findById(codigo)
-				.orElseThrow(() -> new RuntimeException("Veiculo não encontrado"));
+				.orElseThrow(() -> new IllegalArgumentException("Veiculo não encontrado"));
 	}
 
 	public void excluir(Veiculo veiculo) {

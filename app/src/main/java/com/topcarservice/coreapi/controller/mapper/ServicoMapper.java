@@ -16,5 +16,9 @@ public class ServicoMapper {
 	public Servico map(ServicoDTO servicoDto) {		
 		return objectMapper.map(servicoDto, Servico.class);
 	}
+	
+	public ServicoDTO mapTo(Servico servico) {		
+		return objectMapper.map(servico, ServicoDTO.class);
+	}
 
 }

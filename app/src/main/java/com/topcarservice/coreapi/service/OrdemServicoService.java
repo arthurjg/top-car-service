@@ -15,14 +15,14 @@ public class OrdemServicoService {
 	
 	private final OrdemServicoRepository ordemServicoRepository;
 
-	public void salvar(OrdemServico ordemServico) {
-		ordemServicoRepository.save(ordemServico);		
+	public OrdemServico salvar(OrdemServico ordemServico) {
+		return ordemServicoRepository.save(ordemServico);		
 	}
 
 	public OrdemServico carregar(Long codigo) {
 		
 		return ordemServicoRepository.findById(codigo)
-				.orElseThrow(() -> new RuntimeException("OrdemServico não encontrado"));
+				.orElseThrow(() -> new IllegalArgumentException("OrdemServico não encontrado"));
 	}
 
 	public void excluir(OrdemServico ordemServico) {

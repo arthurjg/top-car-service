@@ -1,8 +1,8 @@
 package com.topcarservice.coreapi.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.topcarservice.coreapi.domain.Cliente;
 import com.topcarservice.coreapi.domain.OrdemServico;
 import com.topcarservice.coreapi.repository.OrdemServicoRepository;
 
@@ -32,7 +33,7 @@ class OrdemServicoServiceTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		ordemServico = new OrdemServico();
+		ordemServico = new OrdemServico(new Cliente());
 	}
 	
 	@Test

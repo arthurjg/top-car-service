@@ -1,9 +1,9 @@
 package com.topcarservice.coreapi.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 
+import com.topcarservice.coreapi.domain.Cliente;
 import com.topcarservice.coreapi.domain.OrdemServico;
 
 @DataJpaTest
@@ -30,7 +31,9 @@ class OrdemServicoRepositoryITTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		
-		ordemServico = new OrdemServico();
+		Cliente ordemServicoSalvo = entityManager.persist(Cliente.builder().nome("Cliente Teste").build());	
+		
+		ordemServico = new OrdemServico(ordemServicoSalvo);
 	}
 	
 	@Test

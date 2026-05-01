@@ -1,8 +1,8 @@
 package com.topcarservice.coreapi.controller;
 
+import java.net.URI;
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topcarservice.coreapi.controller.dto.OrdemServicoDTO;
 import com.topcarservice.coreapi.controller.dto.OrdemServicoRetornoDTO;
 import com.topcarservice.coreapi.controller.mapper.OrdemServicoMapper;
+import com.topcarservice.coreapi.domain.Cliente;
 import com.topcarservice.coreapi.domain.OrdemServico;
+import com.topcarservice.coreapi.service.ClienteService;
 import com.topcarservice.coreapi.service.OrdemServicoService;
 
 import lombok.AllArgsConstructor;
@@ -30,23 +31,37 @@ public class OrdemServicoController {
 	
 	OrdemServicoService ordemServicoService;	
 	
-	OrdemServicoMapper ordemServicoMapper;
+	ClienteService clienteService;
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	OrdemServicoMapper ordemServicoMapper;	
+	
 	@PostMapping
-	public void salvar(@RequestBody @Validated OrdemServicoDTO ordemServicoDto) throws Exception {		
+	public ResponseEntity<Void> salvar(@RequestBody @Validated OrdemServicoDTO ordemServicoDto) {			
 		
-		OrdemServico ordemServico = ordemServicoMapper.map(ordemServicoDto);		
-		
-		ordemServicoService.salvar(ordemServico);		
+		try {
+			Cliente cliente = clienteService.carregar(ordemServicoDto.getCodigoCliente());
+			
+			OrdemServico ordemServico = new OrdemServico(cliente);		
+			
+			var ordemServicoSalva =  ordemServicoService.salvar(ordemServico);
+			return ResponseEntity.created(URI.create("/admin/ordem-servicos/" + ordemServicoSalva.getCodigo())).build();
+		} catch (IllegalArgumentException e) {			
+			return ResponseEntity.notFound().build();
+		}	
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<OrdemServico> buscar(@PathVariable("id") Long codigo) {	
+	public ResponseEntity<OrdemServicoRetornoDTO> buscar(@PathVariable("id") Long codigo) {	
 		
-		OrdemServico ordemServico = ordemServicoService.carregar(codigo);		
-		
-		return ResponseEntity.ok().body(ordemServico);
+		try {
+			OrdemServico ordemServico = ordemServicoService.carregar(codigo);	
+			
+			OrdemServicoRetornoDTO ordemservicoResponse = ordemServicoMapper.map(ordemServico);
+			
+			return ResponseEntity.ok().body(ordemservicoResponse);
+		} catch (IllegalArgumentException e) {			
+			return ResponseEntity.notFound().build();
+		}	
 	}
 	
 	@GetMapping

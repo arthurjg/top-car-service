@@ -1,5 +1,26 @@
 package com.topcarservice.coreapi.controller.dto;
 
-public record VeiculoDTO (String cpf, String cnpj, String nome) {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+public class VeiculoDTO { 	
+	
+	private String placa;
+	
+	private String marca;
+	
+	private String modelo;
+	
+	private Integer ano;
+	
+	private Long codigoCliente;
+	
 }

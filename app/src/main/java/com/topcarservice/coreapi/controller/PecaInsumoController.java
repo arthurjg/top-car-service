@@ -39,11 +39,17 @@ public class PecaInsumoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PecaInsumo> buscar(@PathVariable("id") Long codigo) {	
+	public ResponseEntity<PecaInsumoDTO> buscar(@PathVariable("id") Long codigo) {			
 		
-		PecaInsumo pecaInsumo = pecaInsumoService.carregar(codigo);		
-		
-		return ResponseEntity.ok().body(pecaInsumo);
+		try {
+			PecaInsumo pecaInsumo = pecaInsumoService.carregar(codigo);	
+			
+			PecaInsumoDTO pecaInsumoRetorno = pecaInsumoMapper.mapTo(pecaInsumo);
+			
+			return ResponseEntity.ok().body(pecaInsumoRetorno);
+		} catch (IllegalArgumentException e) {			
+			return ResponseEntity.notFound().build();
+		}	
 	}
 	
 	@PutMapping("/{id}")

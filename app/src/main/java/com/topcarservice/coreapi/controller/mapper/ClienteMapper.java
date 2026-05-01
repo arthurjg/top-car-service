@@ -17,4 +17,8 @@ public class ClienteMapper {
 		return objectMapper.map(clienteDto, Cliente.class);
 	}
 
+	public ClienteDTO map(Cliente cliente) {
+		return objectMapper.map(cliente, ClienteDTO.class);
+	}
+
 }

@@ -20,7 +20,7 @@ public class PecaInsumoService {
 	public PecaInsumo carregar(Long codigo) {
 		
 		return pecaInsumoRepository.findById(codigo)
-				.orElseThrow(() -> new RuntimeException("PecaInsumo não encontrado"));
+				.orElseThrow(() -> new IllegalArgumentException("PecaInsumo não encontrado"));
 	}
 
 	public void excluir(PecaInsumo pecaInsumo) {

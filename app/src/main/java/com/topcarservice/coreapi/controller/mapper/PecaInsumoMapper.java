@@ -17,4 +17,8 @@ public class PecaInsumoMapper {
 		return objectMapper.map(pecaInsumoDto, PecaInsumo.class);
 	}
 
+	public PecaInsumoDTO mapTo(PecaInsumo pecaInsumo) {
+		return objectMapper.map(pecaInsumo, PecaInsumoDTO.class);
+	}
+
 }
