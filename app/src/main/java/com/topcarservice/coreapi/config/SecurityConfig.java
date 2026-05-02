@@ -32,7 +32,8 @@ public class SecurityConfig {
 				.authorizeHttpRequests(requests -> {
 					requests.requestMatchers(HttpMethod.POST, "/admin/autenticacao").permitAll();
 					requests.requestMatchers(HttpMethod.GET, "/admin/ordem-servicos").permitAll();
-					requests.requestMatchers(HttpMethod.GET, "/swagger-ui**").permitAll();
+					requests.requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll();
+					requests.requestMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll();
 					requests.anyRequest().authenticated();
 				}).build();
 	}
