@@ -25,3 +25,30 @@ Execute o Docker Compose
 cd ..
 docker-compose -up -d
 ```
+
+### 3. Utilizar aplicação
+
+## 3.1 Acessar Swagger
+
+http://localhost:8082/swagger-ui/index.html#/
+
+## 3.2 Autenticar
+
+aceesar o endpoint de autenticação - "autenticação controller - post"
+
+usuario: fgarage
+senha: 123456
+
+copiar o conteúdo do campo access_key
+
+utilizar no botão campo "authorize"
+
+## 3.2 Utilizar funcionalidades
+
+criar: Cliente, Veículo, Servico, PeçasInsumos
+
+criar: Ordem Servico
+
+adicionar Servicos e peçasInsumos à Ordem de Servico e visualizar Orçamento
+
+aprovar Ordem de Serviço
