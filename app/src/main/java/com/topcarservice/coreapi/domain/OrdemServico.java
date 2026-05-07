@@ -9,8 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,14 +23,18 @@ public class OrdemServico {
 	@Setter
 	private Long codigo;
 	
+	@Setter
 	private StatusOrdemServico status;	
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_codigo")	
 	private Cliente cliente;
 	
-	@ManyToMany
-	private List<Servico> servicos;
+	@OneToMany
+	private List<ServicoSolicitado> servicos;
+	
+	@OneToMany
+	private List<PecaInsumoSolicitado> pecasInsumos;
 	
 	private LocalDateTime dataAbertura;
 	
@@ -39,6 +43,7 @@ public class OrdemServico {
 		dataAbertura = LocalDateTime.now();
 		status = StatusOrdemServico.RECEBIDA;		
 		servicos = new ArrayList<>();		
+		pecasInsumos = new ArrayList<>();
 	}	
 
 	public OrdemServico(Cliente cliente) {

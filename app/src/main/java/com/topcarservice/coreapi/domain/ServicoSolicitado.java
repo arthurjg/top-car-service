@@ -1,13 +1,12 @@
 package com.topcarservice.coreapi.domain;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Servico {
+public class ServicoSolicitado {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
@@ -28,9 +27,18 @@ public class Servico {
 	
 	private String nome;
 	
-	private BigDecimal valorMaoDeObra;
+	private BigDecimal valorMaoDeObra;		
 	
-	@OneToMany(mappedBy = "servico")
-	private List<PecaInsumo> pecasInsumos;	
+	@ManyToOne
+	private Servico servico;
+
+	public ServicoSolicitado(Servico servico) {
+		super();
+		this.servico = servico;
+		this.nome = servico.getNome();
+		this.valorMaoDeObra = servico.getValorMaoDeObra();
+	}
+	
+	
 
 }

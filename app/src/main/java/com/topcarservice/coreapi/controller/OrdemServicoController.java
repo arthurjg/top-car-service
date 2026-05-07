@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topcarservice.coreapi.controller.dto.OrdemServicoDTO;
+import com.topcarservice.coreapi.controller.dto.OrdemServicoItemSolicitadoDTO;
+import com.topcarservice.coreapi.controller.dto.OrdemServicoOrcamentoDTO;
 import com.topcarservice.coreapi.controller.dto.OrdemServicoRetornoDTO;
 import com.topcarservice.coreapi.controller.mapper.OrdemServicoMapper;
 import com.topcarservice.coreapi.domain.Cliente;
 import com.topcarservice.coreapi.domain.OrdemServico;
+import com.topcarservice.coreapi.domain.PecaInsumo;
+import com.topcarservice.coreapi.domain.Servico;
 import com.topcarservice.coreapi.service.ClienteService;
 import com.topcarservice.coreapi.service.OrdemServicoService;
+import com.topcarservice.coreapi.service.PecaInsumoService;
+import com.topcarservice.coreapi.service.ServicoService;
 
 import lombok.AllArgsConstructor;
 
@@ -32,6 +37,10 @@ public class OrdemServicoController {
 	OrdemServicoService ordemServicoService;	
 	
 	ClienteService clienteService;
+	
+	ServicoService servicoService;
+	
+	PecaInsumoService pecaInsumoService;
 	
 	OrdemServicoMapper ordemServicoMapper;	
 	
@@ -74,26 +83,60 @@ public class OrdemServicoController {
 		return ResponseEntity.ok().body(ordemsServicoRetorno);
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<Void> atualizar(@PathVariable("id") Long codigo,
-			@RequestBody @Validated OrdemServicoDTO ordemServicoDto) {	
+	@PostMapping("/{id}/servicos")
+	public ResponseEntity<OrdemServicoOrcamentoDTO> incluirServico(@PathVariable("id") Long codigo,
+			@RequestBody @Validated OrdemServicoItemSolicitadoDTO ordemServicoSolicitadoDto) {	
 		
-		OrdemServico ordemServico = ordemServicoMapper.map(ordemServicoDto);		
+		try {
+			OrdemServico ordemServico = ordemServicoService.carregar(codigo);	
+			
+			Servico servico = servicoService.carregar(ordemServicoSolicitadoDto.getCodigoItem());
+			
+			OrdemServicoOrcamentoDTO orcamento = ordemServicoService.incluirServico(ordemServico, servico);
+			return ResponseEntity.ok().body(orcamento);
+		} catch (IllegalArgumentException e) {			
+			return ResponseEntity.notFound().build();
+		} catch (IllegalStateException e) {			
+			return ResponseEntity.badRequest().build();
+		}				
+	}
+	
+	@PostMapping("/{id}/pecas-insumos")
+	public ResponseEntity<OrdemServicoOrcamentoDTO> incluirPecaInsumo(@PathVariable("id") Long codigo,
+			@RequestBody @Validated OrdemServicoItemSolicitadoDTO ordemServicoSolicitadoDto) {	
 		
-		ordemServico.setCodigo(codigo);
+		try {
+			OrdemServico ordemServico = ordemServicoService.carregar(codigo);	
+			
+			PecaInsumo pecaInsumo = pecaInsumoService.carregar(ordemServicoSolicitadoDto.getCodigoItem());
+			
+			OrdemServicoOrcamentoDTO orcamento = ordemServicoService.incluirPecaInsumo(ordemServico, pecaInsumo, ordemServicoSolicitadoDto.getQuantidade());
+			return ResponseEntity.ok().body(orcamento);
+		} catch (IllegalArgumentException e) {			
+			return ResponseEntity.notFound().build();
+		} catch (IllegalStateException e) {			
+			return ResponseEntity.badRequest().build();
+		}			
+	}
+	
+	@PutMapping("/{id}/aprovacao")
+	public ResponseEntity<OrdemServicoRetornoDTO> enviarAprovacao(@PathVariable("id") Long codigo) {			
 		
-		ordemServicoService.salvar(ordemServico);	
-		
-		return ResponseEntity.noContent().build();
+		try {
+			OrdemServico ordemServico = ordemServicoService.carregar(codigo);	
+			
+			ordemServicoService.enviarAprovacao(ordemServico);
+			
+			OrdemServicoRetornoDTO ordemservicoResponse = ordemServicoMapper.map(ordemServico);
+			
+			return ResponseEntity.ok().body(ordemservicoResponse);
+		} catch (IllegalArgumentException e) {			
+			return ResponseEntity.notFound().build();
+		} catch (IllegalStateException e) {			
+			return ResponseEntity.badRequest().build();
+		}	
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluir(@PathVariable("id") Long codigo) {	
-		
-		OrdemServico ordemServico = ordemServicoService.carregar(codigo);
-		ordemServicoService.excluir(ordemServico);	
-		
-		return ResponseEntity.noContent().build();
-	}
+	
 
 }
