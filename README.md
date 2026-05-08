@@ -8,9 +8,16 @@ back-end do sistema da oficina, com foco em gestão de ordens de serviço, clien
 
 ## Como Executar localmente
 
+### Pré-requisitos / Ferramentas
+
+- **Java 21** ou superior
+- **Git**
+- **Docker** e **Docker Compose**
+
+
 ### 1. Preparação do Ambiente
 
-Clone e build do repositório:
+* Clone e build do repositório:
 ```bash
 git clone https://github.com/arthurjg/top-car-service
 cd top-car-service
@@ -20,10 +27,10 @@ mvnw package
 
 ### 2. Subir do Ambiente
 
-Execute o Docker Compose
+* Execute o Docker Compose
 ```bash
 cd ..
-docker-compose -up -d
+docker-compose up -d
 ```
 
 ### 3. Utilizar aplicação
@@ -34,22 +41,22 @@ http://localhost:8082/swagger-ui/index.html#/
 
 ## 3.2 Autenticar
 
-aceesar o endpoint de autenticação - "autenticação controller - post"
+* aceesar o endpoint de autenticação - "autenticação controller - post"
 
-usuario: fgarage
+* usuario: fgarage
 
-senha: 123456
+* senha: 123456
 
-copiar o conteúdo do campo access_key
+* copiar o conteúdo do campo access_key
 
-utilizar no botão campo "authorize"
+* utilizar no botão campo "authorize"
 
 ## 3.2 Utilizar funcionalidades
 
-criar: Cliente, Veículo, Servico, PeçasInsumos
+* criar: Cliente, Veículo, Servico, PeçasInsumos
 
-criar: Ordem Servico
+* criar: Ordem Servico
 
-adicionar Servicos e peçasInsumos à Ordem de Servico e visualizar Orçamento
+* adicionar Servicos e peçasInsumos à Ordem de Servico e visualizar Orçamento
 
-aprovar Ordem de Serviço
+* aprovar Ordem de Serviço
