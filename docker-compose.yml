@@ -24,7 +24,7 @@ services:
     build:
       context: ./app/
       dockerfile: Dockerfile
-    image: app-top-car-service-core-api-v2
+    image: app-top-car-service-core-api
     container_name: app-core-api
     restart: unless-stopped
     ports:

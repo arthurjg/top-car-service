@@ -7,4 +7,4 @@ USER spring:spring
 ARG JAR_FILE=target/*jar
 COPY ${JAR_FILE} app.jar
 
-ENTRYPOINT ["java","-Xms128M","-Xmx128M","-jar","/app.jar"]
+ENTRYPOINT ["java","-Xms128M","-Xmx128M","-jar", "-Dspring.profiles.active=prod","/app.jar"]
