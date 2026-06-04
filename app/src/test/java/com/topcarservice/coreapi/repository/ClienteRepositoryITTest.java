@@ -13,7 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 
-import com.topcarservice.coreapi.domain.Cliente;
+import com.topcarservice.coreapi.infra.db.entities.ClienteDBEntity;
+import com.topcarservice.coreapi.infra.db.repositories.ClienteRepository;
 
 @DataJpaTest
 class ClienteRepositoryITTest {
@@ -24,23 +25,24 @@ class ClienteRepositoryITTest {
 	@Autowired
 	private TestEntityManager entityManager;
 	
-	Cliente cliente;
+	ClienteDBEntity cliente;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		
-		cliente = Cliente.builder()
-				.nome("John Doe")			
+		cliente = ClienteDBEntity.builder()				
 				.cpf("123.456.789-00")
+				.nome("John Doe")
 				.build();
+				
 	}
 
 	@Test
 	void criaCliente_ComDadosValidos_RetornaCliente() {
 		
-		Cliente clienteSalvo = clienteRepository.save(cliente);
+		ClienteDBEntity clienteSalvo = clienteRepository.save(cliente);
 		
-		var clienteResultado = entityManager.find(Cliente.class, clienteSalvo.getCodigo());
+		var clienteResultado = entityManager.find(ClienteDBEntity.class, clienteSalvo.getCodigo());
 		
 		assertNotNull(clienteResultado);
 		assertEquals(clienteResultado.getNome(), cliente.getNome());
@@ -50,11 +52,11 @@ class ClienteRepositoryITTest {
 	@Test
 	void carregaCliente_ComCodigoValido_RetornaCliente() {
 		
-		Cliente clienteSalvo = entityManager.persist(cliente);		
+		ClienteDBEntity clienteSalvo = entityManager.persist(cliente);		
 		
-		Optional<Cliente> op = clienteRepository.findById(clienteSalvo.getCodigo());
+		Optional<ClienteDBEntity> op = clienteRepository.findById(clienteSalvo.getCodigo());
 		
-		var clienteResultado = entityManager.find(Cliente.class, clienteSalvo.getCodigo());
+		var clienteResultado = entityManager.find(ClienteDBEntity.class, clienteSalvo.getCodigo());
 		
 		assertTrue(op.isPresent());
 		assertNotNull(clienteResultado);
@@ -64,9 +66,9 @@ class ClienteRepositoryITTest {
 	@Test
 	void atualizaCliente_ComCodigoValido_RetornaCliente() {
 		
-		Cliente clienteSalvo = entityManager.persist(cliente);		
+		ClienteDBEntity clienteSalvo = entityManager.persist(cliente);		
 		
-		clienteSalvo = entityManager.find(Cliente.class, clienteSalvo.getCodigo());
+		clienteSalvo = entityManager.find(ClienteDBEntity.class, clienteSalvo.getCodigo());
 		
 		clienteSalvo.setNome("Joanna Doe");
 		
@@ -80,13 +82,13 @@ class ClienteRepositoryITTest {
 	@Test
 	void removeCliente_ComCodigoValido_RetornaVazio() {
 		
-		Cliente clienteSalvo = entityManager.persist(cliente);		
+		ClienteDBEntity clienteSalvo = entityManager.persist(cliente);		
 		
-		var clienteResultado = entityManager.find(Cliente.class, clienteSalvo.getCodigo());
+		var clienteResultado = entityManager.find(ClienteDBEntity.class, clienteSalvo.getCodigo());
 		
 		clienteRepository.deleteById(clienteResultado.getCodigo());
 		
-		clienteResultado = entityManager.find(Cliente.class, clienteResultado.getCodigo());		
+		clienteResultado = entityManager.find(ClienteDBEntity.class, clienteResultado.getCodigo());		
 		
 		assertNull(clienteResultado);		
 	}

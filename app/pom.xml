@@ -13,7 +13,7 @@
 	
 	<groupId>com.top-car-service</groupId>
 	<artifactId>core-api</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 	
 	<name>Top Car Service - API</name>
 	<description>back-end do sistema da oficina, com foco em gestão de ordens de serviço, clientes e peças.</description>	
