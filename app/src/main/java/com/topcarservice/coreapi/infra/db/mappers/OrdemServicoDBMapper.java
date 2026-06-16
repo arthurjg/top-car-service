@@ -14,7 +14,12 @@ public class OrdemServicoDBMapper {
 	private ModelMapper objectMapper;
 
 	public OrdemServicoDBEntity map(OrdemServico ordemServico) {		
-		return objectMapper.map(ordemServico, OrdemServicoDBEntity.class);
+		return OrdemServicoDBEntity.builder()
+				.codigo(ordemServico.getCodigo())
+				.descricao(ordemServico.getDescricao())
+				.valor(ordemServico.getValor())
+				.build();
+				//objectMapper.map(ordemServico, OrdemServicoDBEntity.class);
 	}
 	
 	public OrdemServico mapTo(OrdemServicoDBEntity ordemServicoDBEntity) {		

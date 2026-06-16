@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/admin/clientes")
+@RequestMapping("/admin/servicos")
 public class ServicoPresenter {
 	
 	private final ServicoUseCase servicoUseCase;

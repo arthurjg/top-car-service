@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "cliente")
+@Table(name = "servico_solicitado")
 public class ServicoSolicitadoDBEntity {
 	
 	@Id

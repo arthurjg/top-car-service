@@ -32,11 +32,15 @@ public class OrdemServicoDBEntity {
 	private Long codigo;
 	
 	@Setter
-	private String status;	
+	private Integer status;	
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_codigo")	
 	private ClienteDBEntity cliente;
+	
+	@ManyToOne
+	@JoinColumn(name = "veiculo_codigo")	
+	private VeiculoDBEntity veiculo;
 	
 	@OneToMany
 	private List<ServicoSolicitadoDBEntity> servicos;

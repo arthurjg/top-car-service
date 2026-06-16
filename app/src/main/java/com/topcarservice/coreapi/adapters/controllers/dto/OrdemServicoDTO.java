@@ -14,5 +14,6 @@ import lombok.Setter;
 public class OrdemServicoDTO{
 	
 	Long codigoCliente;
+	Long codigoVeiculo;
 
 }

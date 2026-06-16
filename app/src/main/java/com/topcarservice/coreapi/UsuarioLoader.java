@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.topcarservice.coreapi.domain.Usuario;
-import com.topcarservice.coreapi.repository.UsuarioRepository;
+import com.topcarservice.coreapi.infra.db.repositories.UsuarioRepository;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;

@@ -1,5 +1,6 @@
 package com.topcarservice.coreapi.infra.db;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
@@ -24,6 +25,14 @@ public class OrdemServicoOutputDB implements OrdemServicoOutputPort {
 		
 		return ordemServicoRepository.findById(codigo)
 				.map(ordemServicoDBMapper::mapTo);
+	}
+
+	@Override
+	public List<OrdemServico> findAll() {		
+		return ordemServicoRepository.findAll()
+				.stream()
+				.map(ordemServicoDBMapper::mapTo)
+				.toList();
 	}
 
 }

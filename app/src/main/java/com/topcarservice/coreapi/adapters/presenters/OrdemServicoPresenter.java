@@ -41,8 +41,7 @@ public class OrdemServicoPresenter {
 	@GetMapping
 	public ResponseEntity<List<OrdemServicoRetornoDTO>> listar() {	
 		
-		List<OrdemServico> ordemsServico = null;
-				//ordemServicoUseCase.listar(); TODO TEST ALTERAR	
+		List<OrdemServico> ordemsServico = ordemServicoUseCase.listar();
 		
 		List<OrdemServicoRetornoDTO> ordemsServicoRetorno  = ordemServicoMapper.map(ordemsServico);
 		

@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/admin/clientes")
+@RequestMapping("/admin/veiculos")
 public class VeiculoPresenter {
 	
 	private final VeiculoUseCase veiculoUseCase;

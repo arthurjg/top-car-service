@@ -10,7 +10,9 @@ public class OrdemServico {
 	
 	private StatusOrdemServico status;		
 		
-	private Cliente cliente;	
+	private Cliente cliente;
+	
+	private Veiculo veiculo;
 	
 	private List<ServicoSolicitado> servicos;	
 	
@@ -24,8 +26,15 @@ public class OrdemServico {
 		status = StatusOrdemServico.RECEBIDA;		
 		servicos = new ArrayList<>();		
 		pecasInsumos = new ArrayList<>();
-	}	
+	}		
 
+	public OrdemServico(Cliente cliente, Veiculo veiculo) {
+		this();
+		this.cliente = cliente;
+		this.veiculo = veiculo;
+	}
+
+	@Deprecated
 	public OrdemServico(Long codigo, StatusOrdemServico status, Cliente cliente,
 			List<ServicoSolicitado> servicos, List<PecaInsumoSolicitado> pecasInsumos, LocalDateTime dataAbertura) {
 		super();
@@ -83,6 +92,10 @@ public class OrdemServico {
 
 	public void setDataAbertura(LocalDateTime dataAbertura) {
 		this.dataAbertura = dataAbertura;
+	}
+
+	public Veiculo getVeiculo() {
+		return veiculo;
 	}	
 
 }

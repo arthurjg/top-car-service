@@ -1,5 +1,7 @@
 package com.topcarservice.coreapi.domain.usecases;
 
+import java.util.List;
+
 import com.topcarservice.coreapi.domain.entities.OrdemServico;
 import com.topcarservice.coreapi.domain.usecases.ports.OrdemServicoInputPort;
 import com.topcarservice.coreapi.domain.usecases.ports.OrdemServicoOutputPort;
@@ -15,8 +17,8 @@ public class OrdemServicoUseCase {
 		this.outputPort = outputPort;
 	}
 
-	public void cadastrar(OrdemServico ordemServico) {
-		inputPort.save(ordemServico);		
+	public OrdemServico cadastrar(OrdemServico ordemServico) {
+		return inputPort.save(ordemServico);		
 	}
 
 	public OrdemServico carregar(Long codigo) {
@@ -27,6 +29,10 @@ public class OrdemServicoUseCase {
 
 	public void excluir(OrdemServico ordemServico) {
 		inputPort.delete(ordemServico);		
+	}
+
+	public List<OrdemServico> listar() {		
+		return outputPort.findAll();
 	}
 
 }

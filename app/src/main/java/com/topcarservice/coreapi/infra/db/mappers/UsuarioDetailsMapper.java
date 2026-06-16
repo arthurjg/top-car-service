@@ -1,4 +1,4 @@
-package com.topcarservice.coreapi.service.mapper;
+package com.topcarservice.coreapi.infra.db.mappers;
 
 import java.util.List;
 

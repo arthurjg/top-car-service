@@ -11,7 +11,7 @@ import com.topcarservice.coreapi.adapters.controllers.dto.OrdemServicoPecaInsumo
 import com.topcarservice.coreapi.adapters.controllers.dto.OrdemServicoRetornoDTO;
 import com.topcarservice.coreapi.adapters.controllers.dto.OrdemServicoSolicitadoRetornoDTO;
 import com.topcarservice.coreapi.domain.entities.OrdemServico;
-import com.topcarservice.coreapi.util.DateTimeUtil;
+import com.topcarservice.coreapi.infra.utils.DateTimeUtil;
 
 @Component
 public class OrdemServicoMapper {

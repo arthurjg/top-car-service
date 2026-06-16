@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "cliente")
+@Table(name = "peca_insumo")
 public class PecaInsumoDBEntity {
 	
 	@Id

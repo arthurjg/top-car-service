@@ -20,10 +20,12 @@ import com.topcarservice.coreapi.domain.entities.Cliente;
 import com.topcarservice.coreapi.domain.entities.OrdemServico;
 import com.topcarservice.coreapi.domain.entities.PecaInsumo;
 import com.topcarservice.coreapi.domain.entities.Servico;
+import com.topcarservice.coreapi.domain.entities.Veiculo;
 import com.topcarservice.coreapi.domain.usecases.ClienteUseCase;
 import com.topcarservice.coreapi.domain.usecases.OrdemServicoUseCase;
 import com.topcarservice.coreapi.domain.usecases.PecaInsumoUseCase;
 import com.topcarservice.coreapi.domain.usecases.ServicoUseCase;
+import com.topcarservice.coreapi.domain.usecases.VeiculoUseCase;
 
 import lombok.AllArgsConstructor;
 
@@ -35,6 +37,8 @@ public class OrdemServicoController {
 	OrdemServicoUseCase ordemServicoUseCase;	
 	
 	ClienteUseCase clienteUseCase;
+	
+	VeiculoUseCase veiculoUseCase;
 	
 	ServicoUseCase servicoUseCase;
 	
@@ -48,12 +52,12 @@ public class OrdemServicoController {
 		try {
 			Cliente cliente = clienteUseCase.carregar(ordemServicoDto.getCodigoCliente());
 			
-			OrdemServico ordemServico = new OrdemServico();//TODO TEST ALTERAR 
-					//new OrdemServico(cliente);		
+			Veiculo veiculo = veiculoUseCase.carregar(ordemServicoDto.getCodigoVeiculo());
 			
-			//var ordemServicoSalva =  ordemServicoUseCase.cadastrar(ordemServico);
-			//return ResponseEntity.created(URI.create("/admin/ordem-servicos/" + ordemServicoSalva.getCodigo())).build();
-			return ResponseEntity.ok().build(); //TODO TEST ALTERAR
+			OrdemServico ordemServico = new OrdemServico(cliente, veiculo);						
+			
+			var ordemServicoSalva =  ordemServicoUseCase.cadastrar(ordemServico);
+			return ResponseEntity.created(URI.create("/admin/ordem-servicos/" + ordemServicoSalva.getCodigo())).build();			
 		} catch (IllegalArgumentException e) {			
 			return ResponseEntity.notFound().build();
 		}	

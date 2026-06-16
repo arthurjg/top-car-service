@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/admin/clientes")
+@RequestMapping("/admin/peca-insumos")
 public class PecaInsumoPresenter {
 	
 	private final PecaInsumoUseCase pecaInsumoUseCase;
