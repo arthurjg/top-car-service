@@ -17,8 +17,10 @@ import com.topcarservice.coreapi.adapters.controllers.mappers.UsuarioMapper;
 import com.topcarservice.coreapi.domain.Usuario;
 import com.topcarservice.coreapi.infra.security.AutenticacaoJWTUtil;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Autenticação", description = "Gerenciamento de autenticação")
 @RestController
 @RequestMapping("/admin/autenticacao")
 @RequiredArgsConstructor

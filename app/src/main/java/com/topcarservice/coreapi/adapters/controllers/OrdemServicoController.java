@@ -27,8 +27,10 @@ import com.topcarservice.coreapi.domain.usecases.PecaInsumoUseCase;
 import com.topcarservice.coreapi.domain.usecases.ServicoUseCase;
 import com.topcarservice.coreapi.domain.usecases.VeiculoUseCase;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
+@Tag(name = "Ordem de Serviço", description = "Gerenciamento de ordens de serviço")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/admin/ordem-servicos")

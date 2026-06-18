@@ -11,8 +11,10 @@ import com.topcarservice.coreapi.adapters.controllers.mappers.PecaInsumoMapper;
 import com.topcarservice.coreapi.domain.entities.PecaInsumo;
 import com.topcarservice.coreapi.domain.usecases.PecaInsumoUseCase;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Peça/Insumo", description = "Gerenciamento de peças e insumos")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/peca-insumos")

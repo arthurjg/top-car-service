@@ -11,8 +11,10 @@ import com.topcarservice.coreapi.adapters.controllers.mappers.ServicoMapper;
 import com.topcarservice.coreapi.domain.entities.Servico;
 import com.topcarservice.coreapi.domain.usecases.ServicoUseCase;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Serviço", description = "Gerenciamento de serviços")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/servicos")
