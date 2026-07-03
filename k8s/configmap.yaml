@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-settings
+  namespace: default
+data:  
+  DATABASE_URL: "jdbc:postgresql://db-top-car-postgres:5432/top-car-db"  
