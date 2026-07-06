@@ -4,6 +4,8 @@ RUN addgroup -S spring && adduser -S spring -G spring
 
 USER spring:spring
 
+RUN ./app/mvnw package
+
 ARG JAR_FILE=app/target/*jar
 COPY ${JAR_FILE} app.jar
 
