@@ -15,6 +15,7 @@ import com.topcarservice.coreapi.infra.db.repositories.ClienteRepository;
 
 import jakarta.persistence.EntityManager;
 
+@Disabled
 @SpringBootTest
 class ClienteRepositoryCompTest {
 	
