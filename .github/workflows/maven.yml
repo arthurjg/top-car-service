@@ -12,6 +12,11 @@ on:
   push:
     branches: [ "feature/*" ]
 
+env:
+  AWS_REGION: us-east-1                   
+  ECR_REPOSITORY: artsoft/top-car-service
+  EKS_CLUSTER_NAME: top-car-service-eks-cluster
+
 jobs:
   build:
 
@@ -33,3 +38,20 @@ jobs:
       run: |
         mvn -B package --file app/pom.xml
         docker build . --file Dockerfile --tag top-car-service-app:$(date +%s)
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+    
+    - uses: actions/checkout@v4    
+    - name: Build the Docker image
+      run: mvn -B package --file app/pom.xml          
+    - uses: aws-actions/amazon-ecr-login@v2
+      id: login-ecr
+    - uses: docker/build-push-action@v5
+      with:
+        push: true
+        tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
