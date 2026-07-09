@@ -21,6 +21,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+      - uses: actions/checkout@v4    
+      - name: Build the Docker image
+        run: mvn -B package --file app/pom.xml          
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
       - uses: docker/build-push-action@v5
