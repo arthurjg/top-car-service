@@ -7,11 +7,7 @@ on:
 env:
   AWS_REGION: us-east-1                   
   ECR_REPOSITORY: artsoft/top-car-service
-  EKS_CLUSTER_NAME: top-car-service-eks-cluster 
-
-permissions:
-  id-token: write   # Mandatory for OIDC authentication
-  contents: read
+  EKS_CLUSTER_NAME: top-car-service-eks-cluster
 
 jobs:
   build-and-push:
