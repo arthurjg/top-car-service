@@ -17,7 +17,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
+    steps:    
     - uses: actions/checkout@v4
     - name: Set up JDK 21
       uses: actions/setup-java@v4
@@ -27,7 +27,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file app/pom.xml
-
-    - uses: actions/checkout@v4
+    
+    - uses: actions/checkout@v4    
     - name: Build the Docker image
-      run: docker build . --file app/Dockerfile --tag top-car-service-app:$(date +%s)
+      run: docker build . --file Dockerfile --tag top-car-service-app:$(date +%s)
