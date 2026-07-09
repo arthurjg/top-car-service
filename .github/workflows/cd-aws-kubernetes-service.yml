@@ -1,0 +1,45 @@
+name: CI/CD Pipeline to AWS EKS
+
+on:
+  push:
+    branches: [develop]
+
+env:
+  AWS_REGION: us-east-1                   
+  ECR_REPOSITORY: artsoft/top-car-service
+  EKS_CLUSTER_NAME: top-car-service-eks-cluster 
+
+permissions:
+  id-token: write   # Mandatory for OIDC authentication
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+      - uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - run: |
+          aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+          # Update image and deploy (using envsubst or sed to set image tag)
+          kubectl set image deployment/top-car-service-deployment application=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          kubectl rollout status deployment/top-car-service-deployment
