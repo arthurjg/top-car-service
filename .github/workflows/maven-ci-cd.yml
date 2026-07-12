@@ -12,15 +12,18 @@ on:
   push:
     branches: [ "feature/*" ]
 
+permissions:
+  contents: read
+
 env:
   AWS_REGION: us-east-1                   
   ECR_REPOSITORY: artsoft/top-car-service
-  EKS_CLUSTER_NAME: top-car-service-eks-cluster
+  EKS_CLUSTER_NAME: top-car-eks
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    
 
     steps:    
     - uses: actions/checkout@v4
@@ -52,12 +55,24 @@ jobs:
     - name: Build and Push docker image to Amazon ECR
       run: |
         docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest .
-        docker push -a ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}         
+        docker push -a ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }} 
+
+  deploy:
+      
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
       
     - name: Update kubeconfig and deploy to EKS
       run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
     - name: Deploy to EKS
-      run: kubectl apply -f k8s/deployment.yaml
-        
-        
+      run: |
+        kubectl apply -f k8s/configmap.yaml
+        kubectl apply -f k8s/secrets.yaml    
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/hpa.yaml
+        kubectl apply -f k8s/service.yaml
+          
