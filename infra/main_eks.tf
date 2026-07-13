@@ -7,7 +7,7 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  name               = "top-car-eks"
+  name               = "top-car-eks-cluster"
   kubernetes_version = "1.33"
   region             = "us-east-1"
 
@@ -38,8 +38,6 @@ module "eks" {
     enabled    = true
     node_pools = ["general-purpose"]
   }
-
-  kms_key_aliases = ["eks/top-car-eks-2"]  
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets

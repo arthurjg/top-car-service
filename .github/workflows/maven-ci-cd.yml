@@ -18,7 +18,7 @@ permissions:
 env:
   AWS_REGION: us-east-1                   
   ECR_REPOSITORY: artsoft/top-car-service
-  EKS_CLUSTER_NAME: top-car-eks
+  EKS_CLUSTER_NAME: top-car-eks-cluster
 
 jobs:
   deploy:      
