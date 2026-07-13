@@ -3,20 +3,21 @@ kind: Deployment
 metadata:
   name: app-deployment
   labels:
-    app: top-car-service
+    app: top-car-service-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: top-car-service
+      app: top-car-service-app
   template:
     metadata:
       labels:
-        app: top-car-service
+        app: top-car-service-app
     spec:
-      containers:
+      containers:      
       - name: top-car-service
-        image: top-car-service:latest
+        image: top-car-service-app:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 8082
         env:        
@@ -29,7 +30,9 @@ spec:
           valueFrom:
             secretKeyRef:
               name: app-db-credentials
-              key: db-password
-        envFrom:        
-        - configMapRef:
-            name: app-settings
+              key: db-password        
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-settings
+              key: DATABASE_URL

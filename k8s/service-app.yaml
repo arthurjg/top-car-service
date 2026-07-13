@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: top-car-service
+  name: top-car-service-svc
   labels:
-    app: top-car-app
+    app: top-car-service-app
 spec:
   type: ClusterIP
   selector:
-    app: top-car-app
+    app: top-car-service-app
   ports:
     - protocol: TCP
       port: 80
