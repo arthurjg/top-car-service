@@ -19,6 +19,7 @@ env:
   AWS_REGION: us-east-1                   
   ECR_REPOSITORY: artsoft/top-car-service
   EKS_CLUSTER_NAME: top-car-eks
+  TERRAFORM_WORKING_DIR: infra
 
 jobs:
   build:
@@ -63,6 +64,7 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: ${{ env.TERRAFORM_WORKING_DIR }}
 
     steps:
         # Checkout the repository to the GitHub Actions runner
@@ -89,8 +91,7 @@ jobs:
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      - name: Terraform Apply        
         run: terraform apply -auto-approve -input=false
 
   deploy:
