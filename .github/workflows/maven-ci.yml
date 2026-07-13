@@ -6,11 +6,11 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CD with Maven
+name: Java CI with Maven
 
 on:  
   push:
-    branches: [ "develop" ]
+    branches: [ "feature/*" ]
 
 permissions:
   contents: read
@@ -21,12 +21,26 @@ env:
   EKS_CLUSTER_NAME: top-car-eks
 
 jobs:
-  deploy:      
-    
-    runs-on: ubuntu-latest
+  build:
 
-    steps:
+    runs-on: ubuntu-latest    
+
+    steps:    
     - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file app/pom.xml
+    
+    - uses: actions/checkout@v4    
+    - name: Build the Docker image
+      run: |
+        mvn -B package --file app/pom.xml
+        docker build . --file Dockerfile --tag top-car-service-app:$(date +%s)
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -34,17 +48,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-      
-    - name: Update kubeconfig and deploy to EKS
-      run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
-
-    - name: Deploy to EKS
+            
+    - uses: aws-actions/amazon-ecr-login@v2
+      id: login-ecr
+    
+    - name: Build and Push docker image to Amazon ECR
       run: |
-        kubectl apply -f k8s/configmap.yaml
-        kubectl apply -f k8s/secrets.yaml    
-        kubectl apply -f k8s/deployment-db.yaml
-        kubectl apply -f k8s/service-db.yaml
-        kubectl apply -f k8s/deployment-app.yaml
-        kubectl apply -f k8s/service-app.yaml
-        kubectl apply -f k8s/hpa.yaml
+        docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest .
+        docker push -a ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }} 
           

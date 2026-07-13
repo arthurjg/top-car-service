@@ -39,6 +39,8 @@ module "eks" {
     node_pools = ["general-purpose"]
   }
 
+  kms_key_aliases = ["eks/top-car-eks-2"]  
+
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
