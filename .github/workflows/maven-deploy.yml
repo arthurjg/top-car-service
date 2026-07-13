@@ -17,7 +17,7 @@ permissions:
 
 env:
   AWS_REGION: us-east-1                   
-  ECR_REPOSITORY: artsoft/top-car-service
+  ECR_REPOSITORY: top-car-service-app
   EKS_CLUSTER_NAME: top-car-eks
   TERRAFORM_WORKING_DIR: infra
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
