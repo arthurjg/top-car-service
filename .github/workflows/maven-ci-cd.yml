@@ -17,7 +17,7 @@ permissions:
 
 env:
   AWS_REGION: us-east-1                   
-  ECR_REPOSITORY: artsoft/top-car-service
+  ECR_REPOSITORY: top-car-service-app
   EKS_CLUSTER_NAME: top-car-eks-cluster
 
 jobs:
@@ -45,6 +45,6 @@ jobs:
         kubectl apply -f k8s/deployment-db.yaml
         kubectl apply -f k8s/service-db.yaml
         kubectl apply -f k8s/deployment-app.yaml
-        kubectl apply -f k8s/service-app.yaml
+        kubectl apply -f k8s/service-lb.yaml
         kubectl apply -f k8s/hpa.yaml
           
