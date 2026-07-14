@@ -5,6 +5,8 @@ back-end do sistema da oficina, com foco em gestão de ordens de serviço, clien
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.5-brightgreen)
 ![Maven](https://img.shields.io/badge/Maven-3.8.5-blue)
 ![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Enabled-blue)
+![Terraform](https://img.shields.io/badge/Terraform-Enabled-purple)
 
 ## Como Executar localmente
 
@@ -13,9 +15,10 @@ back-end do sistema da oficina, com foco em gestão de ordens de serviço, clien
 - **Java 21** ou superior
 - **Git**
 - **Docker** e **Docker Compose**
+- **Kubernetes**
 
 
-### 1. Preparação do Ambiente
+### 1.1. Preparação do Ambiente
 
 * Clone e build do repositório:
 ```bash
@@ -23,9 +26,10 @@ git clone https://github.com/arthurjg/top-car-service
 cd top-car-service
 cd app
 mvnw package
+docker build . --file Dockerfile
 ```
 
-### 2. Subir do Ambiente
+### 1.2.1 Subir do Ambiente Via Docker/Docker-compose
 
 * Execute o Docker Compose
 ```bash
@@ -33,13 +37,21 @@ cd ..
 docker-compose up -d
 ```
 
-### 3. Utilizar aplicação
+### 1.2.2 Subir do Ambiente Via Docker/Kubernetes
 
-## 3.1 Acessar Swagger
+* execute os manifestos do kubernetes no cluster
+```bash
+cd ..
+k8s.bat
+```
+
+### 1.3. Utilizar aplicação
+
+### 1.3.1 Acessar Swagger
 
 http://localhost:8082/swagger-ui/index.html#/
 
-## 3.2 Autenticar
+### 1.3.2 Autenticar
 
 * aceesar o endpoint de autenticação - "autenticação controller - post"
 
@@ -51,7 +63,7 @@ http://localhost:8082/swagger-ui/index.html#/
 
 * utilizar no botão campo "authorize"
 
-## 3.2 Utilizar funcionalidades
+### 1.3.2 Utilizar funcionalidades
 
 * criar: Cliente, Veículo, Servico, PeçasInsumos
 
@@ -60,3 +72,4 @@ http://localhost:8082/swagger-ui/index.html#/
 * adicionar Servicos e peçasInsumos à Ordem de Servico e visualizar Orçamento
 
 * aprovar Ordem de Serviço
+
