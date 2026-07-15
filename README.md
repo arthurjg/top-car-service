@@ -12,7 +12,7 @@ back-end do sistema da oficina, com foco em gestão de ordens de serviço, clien
 
 #### Objetivos/Entregáveis dessa Fase
 
-- Refatorar o código da fase 1 aplicando Clean Code
+- Refatorar o código da fase 1 aplicando Clean Architecture
 - Garantir a aplicação containerizada via Docker/Docker-Compose
 - Criar manifestos YAML para deploy em Kubernetes(Deployments, Services, ConfigMaps, Secrets e HPA)
 - Infraestrutura como Código (IaC) com Terraform para provisionamento Cloud AWS
@@ -20,7 +20,7 @@ back-end do sistema da oficina, com foco em gestão de ordens de serviço, clien
 
 #### Arquitetura
 
-![arquitetura](https://drive.google.com/file/d/1oS4SR4qyvh2W7Ib0vGF5DS2faieg0Xjb/view?usp=sharing)
+![arquitetura](/docs/diagrama-arquitetura-aws.drawio.png)
 
 ## Como Executar localmente
 
@@ -40,7 +40,7 @@ git clone https://github.com/arthurjg/top-car-service
 cd top-car-service
 cd app
 mvnw package
-docker build . --file Dockerfile
+docker build -t top-car-service:v1 .
 ```
 
 ### 1.2.1 Subir do Ambiente Via Docker/Docker-compose
