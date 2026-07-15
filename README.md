@@ -56,7 +56,8 @@ docker-compose up -d
 * execute os manifestos do kubernetes no cluster
 ```bash
 cd ..
-k8s.bat
+k8s-start.bat
+kubectl port-forward svc/top-car-service-svc 5000:80
 ```
 
 ### 1.3. Utilizar aplicação
@@ -64,6 +65,8 @@ k8s.bat
 ### 1.3.1 Acessar Swagger
 
 http://localhost:8082/swagger-ui/index.html#/
+
+http://localhost:5000/swagger-ui/index.html
 
 ### 1.3.2 Autenticar
 
