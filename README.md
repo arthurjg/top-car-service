@@ -22,7 +22,7 @@ back-end do sistema da oficina, com foco em gestão de ordens de serviço, clien
 
 ![arquitetura](/docs/diagrama-arquitetura-aws.drawio.png)
 
-## Como Executar localmente;
+## Como Executar localmente
 
 ### Pré-requisitos / Ferramentas
 
