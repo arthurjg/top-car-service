@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.topcarservice.coreapi.adapters.controllers.dto.ClienteDTO;
 import com.topcarservice.coreapi.adapters.controllers.mappers.ClienteMapper;
+import com.topcarservice.coreapi.domain.entities.CPF;
 import com.topcarservice.coreapi.domain.entities.Cliente;
 import com.topcarservice.coreapi.domain.usecases.ClienteUseCase;
 
@@ -32,11 +33,23 @@ public class ClientePresenter {
 			ClienteDTO clienteDTO = clienteMapper.map(cliente);
 			
 			return ResponseEntity.ok().body(clienteDTO);
-		} catch (IllegalArgumentException e) {			
-			System.out.println(e.getMessage());
+		} catch (IllegalArgumentException e) {				
 			return ResponseEntity.notFound().build();
 		}			
 		
+	}
+	
+	@GetMapping("/cpf/{cpf}")
+	public ResponseEntity<ClienteDTO> buscarPeloCPF(@PathVariable String cpf) {		
+				
+		try {
+			Cliente cliente = clienteUseCase.carregarPeloCPF(new CPF(cpf));	
+			ClienteDTO clienteDTO = clienteMapper.map(cliente);
+			
+			return ResponseEntity.ok().body(clienteDTO);
+		} catch (IllegalArgumentException e) {				
+			return ResponseEntity.notFound().build();
+		}					
 	}
 
 }
