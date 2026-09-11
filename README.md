@@ -109,7 +109,11 @@ http://localhost:5000/swagger-ui/index.html
 
 ### RFCs
 
+/docs/rfc/RFC-01-Cloud-Provider.pdf
+
 ### ADRs
+
+/docs/adr/ADR-01-Cloud-Provider.pdf
 
 
 
