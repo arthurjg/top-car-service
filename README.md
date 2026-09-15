@@ -8,19 +8,7 @@ back-end do sistema da oficina, com foco em gestão de ordens de serviço, clien
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-Enabled-blue)
 ![Terraform](https://img.shields.io/badge/Terraform-Enabled-purple)
 
-### Nota versao Fase 2
-
-#### Objetivos/Entregáveis dessa Fase
-
-- Refatorar o código da fase 1 aplicando Clean Architecture
-- Garantir a aplicação containerizada via Docker/Docker-Compose
-- Criar manifestos YAML para deploy em Kubernetes(Deployments, Services, ConfigMaps, Secrets e HPA)
-- Infraestrutura como Código (IaC) com Terraform para provisionamento Cloud AWS
-- Integração Contínua/Entrega Contínua (CI/CD) com Github Actions para build maven, docker, geração imagem ECR, deploy cluster EKS e aplicação de manifestos kubernetes no Cluster
-
-#### Arquitetura
-
-![arquitetura](/docs/diagrama-arquitetura-aws.drawio.png)
+ maven, docker, geração imagem ECR, deploy cluster EKS e aplicação de manifestos kubernetes no Cluster
 
 ## Como Executar localmente
 
@@ -89,4 +77,43 @@ http://localhost:5000/swagger-ui/index.html
 * adicionar Servicos e peçasInsumos à Ordem de Servico e visualizar Orçamento
 
 * aprovar Ordem de Serviço
+
+## Notas da versão
+
+### Nota versão 1.1.0 (Fase 2)
+
+#### Objetivos/Entregáveis dessa Fase
+
+- Refatorar o código da fase 1 aplicando Clean Architecture
+- Garantir a aplicação containerizada via Docker/Docker-Compose
+- Criar manifestos YAML para deploy em Kubernetes(Deployments, Services, ConfigMaps, Secrets e HPA)
+- Infraestrutura como Código (IaC) com Terraform para provisionamento Cloud AWS
+- Integração Contínua/Entrega Contínua (CI/CD) com Github Actions para build
+
+### Nota versão 1.2.0 (Fase 3)
+
+#### Objetivos/Entregáveis dessa Fase
+
+- Adicionar autenticação via CPF
+- Refatorar aplicação para intrumentar utilização de APM Datadog
+
+## Documentação da Arquitetura
+
+### Diagrama de Componentes
+
+![arquitetura](/docs/diagrama-arquitetura-aws.drawio.png)
+
+### Diagrama de Sequência
+
+![arquitetura](/docs/top-car-service-diag-seq.drawio.png)
+
+### RFCs
+
+/docs/rfc/RFC-01-Cloud-Provider.pdf
+
+### ADRs
+
+/docs/adr/ADR-01-Cloud-Provider.pdf
+
+
 

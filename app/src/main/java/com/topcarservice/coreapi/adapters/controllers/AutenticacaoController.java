@@ -19,12 +19,14 @@ import com.topcarservice.coreapi.infra.security.AutenticacaoJWTUtil;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Tag(name = "Autenticação", description = "Gerenciamento de autenticação")
+@Slf4j
 @RestController
 @RequestMapping("/admin/autenticacao")
 @RequiredArgsConstructor
-public class AutenticacaoController {
+public class AutenticacaoController { 
 
 	private final AuthenticationManager manager;
 
@@ -32,6 +34,8 @@ public class AutenticacaoController {
 
 	@PostMapping
 	public ResponseEntity<Object> login(@RequestBody @Validated AutorizacaoDTO autorizacao) {
+		
+		log.info("Autenticando usuário: {}", autorizacao.getLogin());
 
 		var tokenParam = new UsernamePasswordAuthenticationToken(autorizacao.getLogin(), autorizacao.getSenha());
 		var authentication = manager.authenticate(tokenParam);

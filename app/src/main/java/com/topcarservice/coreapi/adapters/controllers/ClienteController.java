@@ -19,8 +19,10 @@ import com.topcarservice.coreapi.domain.usecases.ClienteUseCase;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Tag(name = "Cliente", description = "Gerenciamento de clientes")
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/clientes")
@@ -37,6 +39,8 @@ public class ClienteController {
 		Cliente cliente = clienteMapper.map(clienteDto);		
 		
 		clienteUseCase.cadastrar(cliente);		
+		
+		log.info("Cliente cadastrado com sucesso: {}", cliente.getCodigo());
 	}
 	
 	@PutMapping("/{id}")
@@ -47,7 +51,9 @@ public class ClienteController {
 		
 		cliente.setCodigo(codigo);
 		
-		clienteUseCase.cadastrar(cliente);			
+		clienteUseCase.cadastrar(cliente);		
+		
+		log.info("Cliente atualizado com sucesso: {}", cliente.getCodigo());
 		
 		return ResponseEntity.noContent().build();
 	}
@@ -57,6 +63,8 @@ public class ClienteController {
 		
 		Cliente cliente = clienteUseCase.carregar(codigo);
 		clienteUseCase.excluir(cliente);	
+		
+		log.info("Cliente excluído com sucesso: {}", cliente.getCodigo());
 		
 		return ResponseEntity.noContent().build();
 	}
